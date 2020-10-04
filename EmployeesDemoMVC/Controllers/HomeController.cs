@@ -24,6 +24,7 @@ namespace EmployeesDemoMVC.Controllers
             return View();
         }
 
+        [Route("/create")]
         public IActionResult Create()
         {
             return View("~/Views/Crud/Create.cshtml");

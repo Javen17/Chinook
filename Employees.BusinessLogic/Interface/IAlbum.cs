@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Chinook.BusinessLogic.Interface
 {
-    public interface IAlbum: IBaseManager<Album>
+    public interface IAlbumManager: IBaseManager<Album>
     {
     }
 }

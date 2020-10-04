@@ -34,6 +34,7 @@ namespace Chinook.BusinessLogic
 			{
 				Container.AddExtension(new Diagnostic());
 				Container.RegisterSingleton<IArtistManager, ArtistManager>(new InjectionConstructor(_context));
+				Container.RegisterSingleton<IAlbumManager, AlbumManager>(new InjectionConstructor(_context));
 			}
 			catch (Exception e)
 			{
