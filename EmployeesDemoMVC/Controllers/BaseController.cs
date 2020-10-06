@@ -148,7 +148,7 @@ namespace ChinookDemoMVC.Controllers
                         return NotFound();
                     }
 
-                    return item;
+                    return Ok();
                 }
                 catch (Exception e)
                 {
