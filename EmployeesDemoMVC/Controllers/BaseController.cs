@@ -77,8 +77,8 @@ namespace ChinookDemoMVC.Controllers
                 }
             }
 
-            [HttpPut("{id}")]
-            public virtual async Task<IActionResult> Put(long id, TEntity item)
+            [HttpPut("{json/id}")]
+            public virtual async Task<IActionResult> PutJson(long id, TEntity item)
             {
                 try
                 {
@@ -105,7 +105,7 @@ namespace ChinookDemoMVC.Controllers
 
             }
 
-            [HttpPost("json/")]
+            [HttpPost]
             public virtual async Task<ActionResult<TEntity>> Post([FromForm] TEntity item)
             {
                 try
@@ -121,7 +121,7 @@ namespace ChinookDemoMVC.Controllers
                 }
             }
 
-            [HttpPost]
+            [HttpPost("json/")]
             public virtual async Task<ActionResult<TEntity>> PostJson(TEntity item)
             {
                 try
@@ -137,8 +137,8 @@ namespace ChinookDemoMVC.Controllers
                 }
             }
 
-            [HttpDelete("{id}")]
-            public virtual async Task<ActionResult<TEntity>> Delete(int id)
+            [HttpDelete("json/{id}")]
+            public virtual async Task<ActionResult<TEntity>> DeleteJson(int id)
             {
                 try
                 {

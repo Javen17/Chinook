@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Chinook.BusinessModel.Models
 {
-    class Song : NamedKeyedEntity
+    public class Song : NamedKeyedEntity
     {
         public long SongId { set; get; }
         public override string Name { get ; set ; }

@@ -1,6 +1,63 @@
-﻿@{
+﻿@using Chinook.BusinessModel.Models
+@model Genre
+@{
     ViewData["Title"] = "Géneros musicales";
+    var genres = (List<Genre>)ViewBag.ListItems;
+
 }
 <h1>Géneros</h1>
 
-<a asp-controller="Genre" asp-action="Create" role="button" class="btn btn-success btn-sm">Crear Género</a>
+<div class="my-5">
+    @using (Html.BeginForm("Post", "Genre", FormMethod.Post))
+    {
+        <strong class="pr-2">Nombre </strong> @Html.EditorFor(m => m.Name)
+        <br />
+        <input class="btn btn-success btn-sm my-3" id="Submit" type="submit" value="Crear Género" >
+    }
+</div>
+
+
+<table id="table" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var genre in genres)
+        {
+            <tr>
+                <td>@genre.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+@if ((bool)ViewData["Deleted"])
+{
+    <text>
+    alert('Eliminado');
+    </text>
+}
+
+
+@if ((bool)ViewData["Modified"])
+{
+    <text>
+    alert('Modificado');
+    </text>
+}
+
+
+    $(document).ready(function () {
+        $('#table').DataTable({
+    buttons: [
+                {
+        extend: 'remove',
+                    editor: myEditor
+                }
+            ]
+        });
+});
+</script>

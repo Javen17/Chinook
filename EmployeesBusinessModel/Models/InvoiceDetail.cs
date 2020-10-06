@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Chinook.BusinessModel.Models
 {
-    class InvoiceDetail : KeyedEntity
+    public class InvoiceDetail : KeyedEntity
     {
         public long InvoiceDetailId { get; set; }
         public int Quantity { get; set; }

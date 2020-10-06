@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Chinook.BusinessModel.Models
 {
-    class Employee : NamedKeyedEntity
+    public class Employee : NamedKeyedEntity
     {
         public long EmployeeId { get; set; }
         public string LastName { get; set; }

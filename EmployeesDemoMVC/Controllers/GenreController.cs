@@ -5,6 +5,10 @@ using ChinookDemoMVC.Controllers.FoxyPos.Api.Controllers;
 using Chinook.BusinessLogic;
 using Chinook.BusinessLogic.Interface;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
+using System.Threading.Tasks;
+using System;
+using System.Diagnostics;
 
 namespace ChinookDemoMVC.Controllers
 {
@@ -12,42 +16,80 @@ namespace ChinookDemoMVC.Controllers
     [Route("[controller]")]
     public class GenreController : BaseController<Genre>
     {
-        
+
         public GenreController(IObjectFactory factory) : base()
         {
             _manager = factory.Resolve<IGenreManager>();
         }
-        // GET: GenreController
+
+
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int page = 0, int pageSize = _defaultPageSize)
         {
+            var query = _manager.List();
+            var itemCount = query.Count();
+            int? pages = GetPages(itemCount, page, pageSize);
+
+            query = Paginate(query, page);
+            var items = query.ToList();
+
+            ViewData["ListItems"] = query;
+            ViewData["Pages"] = pages;
+            ViewData["CurrentPage"] = page;
             return View("~/Views/Genre/Index.cshtml");
         }
 
-        [HttpGet]
-        [Route("[action]")]
-        public IActionResult Create()
+        [HttpDelete]
+        public async Task<ActionResult<Genre>> Delete(int id)
         {
-            return View("~/Views/Genre/Create.cshtml");
+            try
+            {
+                var item = await _manager.Delete(id);
+                if (item == null)
+                {
+                    return NotFound();
+                }
+
+                ViewData["DeletedItem"] = item;
+                ViewData["Deleted"] = true;
+                return View("~/Views/Genre/Index.cshtml");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                LogManager.Current.Log.Error(e);
+                return StatusCode(500, "Internal Server Error " + e.Message);
+            }
         }
 
-        [HttpPost]
-        [Route("[action]")]
-        public IActionResult Store(IFormCollection collection)
+        [HttpPut]
+        public virtual async Task<IActionResult> Put(long id, [FromForm]Genre item)
         {
-            var genre = new Genre();
-            if(collection["Name"].ToString() == null)
+            try
             {
-                return View("~/Views/Genre/Create.cshtml");
+                if (id != item.Key)
+                {
+                    return BadRequest();
+                }
+
+                bool result = await _manager.Modify(id, item);
+
+                if (result == false)
+                {
+                    return NotFound();
+                }
+
+                ViewData["Modified"] = true;
+                return View("~/Views/Genre/Index.cshtml");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                LogManager.Current.Log.Error(e);
+                return StatusCode(500, "Internal Server Error " + e.Message);
             }
 
-            genre.Name = collection["Name"].ToString();
-
-            _manager.Add(genre);
-
-            return View("~/Views/Genre/Index.cshtml");
         }
-
 
     }
 }

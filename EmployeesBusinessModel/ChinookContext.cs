@@ -8,6 +8,11 @@ namespace EmployeesBusinessModel
         public DbSet<Album> Album { get; set; }
         public DbSet<Artist> Artist { get; set; }
         public DbSet<Genre> Genre { get; set; }
+        public DbSet<Client> Client { get; set; }
+        public DbSet<Employee> Employee { get; set; }
+        public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<InvoiceDetail> InvoiceDetail { get; set; }
+        public DbSet<Song> Song { get; set; }
 
         public ChinookContext(DbContextOptions<ChinookContext> options)
             : base(options)
