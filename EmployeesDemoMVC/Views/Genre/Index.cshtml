@@ -1,4 +1,5 @@
 ﻿@using Chinook.BusinessModel.Models
+@using Microsoft.AspNetCore.Http.Extensions;
 @model Genre
 @{
     ViewData["Title"] = "Géneros musicales";
@@ -28,6 +29,7 @@
         {
             <tr>
                 <td>@genre.Name</td>
+                <td><input class="btn btn-danger btn-sm my-3" id="Submit" type="submit" value="Borrar Género" onclick="deleteItem(@genre.GenreId)"></td>
             </tr>
         }
     </tbody>
@@ -56,16 +58,25 @@
     }
 }
 
-
-
     $(document).ready(function () {
         $('#table').DataTable({
-    buttons: [
+            buttons: [
                 {
-        extend: 'remove',
+                    extend: 'remove',
                     editor: myEditor
                 }
             ]
         });
-});
+    });
+
+    function deleteItem(itemId){
+        return fetch('@Url.ActionContext.HttpContext.Request.GetEncodedUrl()/json/' + itemId, {
+            method: 'Delete'
+        }).then(response => {
+            if (response.status == 200) {
+                alert('Eliminado');
+                window.location.replace('@Url.ActionContext.HttpContext.Request.GetEncodedUrl()');
+                return;
+            } });
+    }
 </script>
