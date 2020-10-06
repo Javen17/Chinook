@@ -1,0 +1,32 @@
+﻿@using Chinook.BusinessModel.Models
+@{
+    ViewData["Title"] = "Canciones";
+    var songs = (List<Song>)ViewBag.ListItems;
+
+}
+
+<a asp-controller="Song" asp-action="Create" class="btn btn-success" role="button">Agregar Canción</a>
+<br>
+<br>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <td scope="col">ID</td>
+            <td scope="col">Nombre</td>
+            <td scope="col">Género</td>
+            <td scope="col">Album</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var song in songs)
+        {
+            <tr>
+                <td>@song.SongId</td>
+                <td>@song.Name</td>
+                <td>@song.Genre.Name</td>
+                <td>@song.Album.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
