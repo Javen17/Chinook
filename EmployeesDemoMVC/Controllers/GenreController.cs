@@ -24,7 +24,7 @@ namespace ChinookDemoMVC.Controllers
 
 
         [HttpGet]
-        public IActionResult Index(int page = 0, int pageSize = _defaultPageSize)
+        public IActionResult Index(int page = 1, int pageSize = _defaultPageSize)
         {
             var query = _manager.List();
             var itemCount = query.Count();
@@ -33,7 +33,7 @@ namespace ChinookDemoMVC.Controllers
             query = Paginate(query, page);
             var items = query.ToList();
 
-            ViewData["ListItems"] = query;
+            ViewData["ListItems"] = items;
             ViewData["Pages"] = pages;
             ViewData["CurrentPage"] = page;
             return View("~/Views/Genre/Index.cshtml");

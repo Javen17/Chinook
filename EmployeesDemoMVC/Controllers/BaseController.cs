@@ -77,7 +77,7 @@ namespace ChinookDemoMVC.Controllers
                 }
             }
 
-            [HttpPut("{json/id}")]
+            [HttpPut("json/{id}")]
             public virtual async Task<IActionResult> PutJson(long id, TEntity item)
             {
                 try

@@ -12,7 +12,7 @@
     {
         <strong class="pr-2">Nombre </strong> @Html.EditorFor(m => m.Name)
         <br />
-        <input class="btn btn-success btn-sm my-3" id="Submit" type="submit" value="Crear Género" >
+        <input class="btn btn-success btn-sm my-3" id="Submit" type="submit" value="Crear Género">
     }
 </div>
 
@@ -34,20 +34,28 @@
 </table>
 
 <script>
-@if ((bool)ViewData["Deleted"])
+@if(ViewData["Deleted"] != null)
 {
+    if ((bool)ViewData["Deleted"])
+    {
     <text>
     alert('Eliminado');
     </text>
+    }
 }
 
 
-@if ((bool)ViewData["Modified"])
+
+@if(ViewData["Modified"] != null)
 {
+    if ((bool)ViewData["Modified"])
+    {
     <text>
     alert('Modificado');
     </text>
+    }
 }
+
 
 
     $(document).ready(function () {
