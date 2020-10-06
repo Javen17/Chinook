@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Crear Género";
+}
+
+
+<div class="d-flex justify-content-center">
+    
+    <form method="post" class="w-75" asp-controller="Genre" asp-action="Store" enctype="multipart/form-data">
+        <h4>Crear género</h4>
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" name="Name" required aria-describedby="name">
+        </div>
+        
+        
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>

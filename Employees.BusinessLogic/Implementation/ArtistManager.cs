@@ -1,9 +1,6 @@
 ﻿using Chinook.BusinessLogic.Interface;
 using Chinook.BusinessModel.Models;
 using EmployeesBusinessModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Chinook.BusinessLogic.Implementation
 {

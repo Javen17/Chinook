@@ -18,6 +18,9 @@ namespace ChinookDemoMVC.Controllers
         [HttpGet]
          public IActionResult Index()
         {
+            var artist = new Artist();
+            artist.Name = "Mika";
+            _manager.Add(artist);
             return View("~/Views/Crud/Artist.cshtml");
         }
 
