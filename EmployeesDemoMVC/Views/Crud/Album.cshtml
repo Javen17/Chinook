@@ -1,9 +1,0 @@
-﻿@using Chinook.BusinessModel.Models
-@model Artist
-
-@using (Html.BeginForm("Post", "Artist", FormMethod.Post))
-{
-    <strong>Name </strong> @Html.EditorFor(m => m.Name)
-    <br />
-    <input id="Submit" type="submit" value="submit" />
-}

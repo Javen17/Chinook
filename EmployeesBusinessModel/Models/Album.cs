@@ -12,11 +12,11 @@ namespace Chinook.BusinessModel.Models
         [NotMapped]
         public override long Key { get { return this.AlbumId; } set { this.AlbumId= value; }}
         [NotMapped]
-        public override string Name { get { return this.Name; } set { this.Name = value; } }
+        public override string Name { get { return this.Title; } set { this.Title = value; } }
 
         public long AlbumId { get; set; }
         public string Title { get; set; }
 
-        public virtual ICollection<Album> Albums { get; set; }
+        public virtual ICollection<Artist> Artist { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@using Chinook.BusinessModel.Models
+@model Song
 @{
     ViewData["Title"] = "Guardar Canción";
     var genres = (List<Genre>)ViewBag.GenreItems;
@@ -7,7 +8,7 @@
 }
 
 <div class="d-flex justify-content-center">
-    <form class="w-75" enctype="multipart/form-data" method="post" asp-controller="Song" asp-action="Store">
+    <form class="w-75" enctype="multipart/form-data" method="post" asp-controller="Song" asp-action="Post">
         <h4>Nueva Canción</h4>
 
         <div class="form-group">
@@ -17,7 +18,7 @@
 
         <div class="form-group">
             <label for="Genre">Genre</label>
-            <select class="form-control" id="Genre" name="Genre" required>
+            <select class="form-control" id="Genre" name="GenreId" required>
                 <option>Seleccione...</option>
                 @foreach (var genre in genres)
                 {
@@ -28,14 +29,10 @@
 
         <div class="form-group">
             <label for="Album">Album</label>
-            <select class="form-control" id="Album" name="Album" required>
-                <option>Seleccione...</option>
-                @foreach (var album in albums)
-                {
-                    <option value="@album.AlbumId">@album.Name</option>
-                }
-            </select>
+            @Html.DropDownList("Album", ((albums).Select(m => new SelectListItem { Text = m.Title, Value = m.ToString() })), new { @class = "form-control", @id = "Album", @name = "Album" })
         </div>
+
+        @Html.EditorFor(@model => @model.Album)
 
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>

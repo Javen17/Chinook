@@ -41,10 +41,10 @@ namespace ChinookDemoMVC.Controllers
             return View("~/Views/Song/Index.cshtml");
         }
 
-        [HttpGet]
         [Route("[action]")]
         public IActionResult Create()
         {
+           
             var query = _genreManager.List();
             var queryAlbum = _albumManager.List();
             var genres =      query.ToList();
