@@ -8,8 +8,13 @@ namespace Chinook.BusinessModel.Models
     public class InvoiceDetail : KeyedEntity
     {
         public long InvoiceDetailId { get; set; }
+
+        public long InvoiceId { get; set; }
+
+        [ForeignKey("InvoiceId")]
+        public Invoice Invoice { get; set; }
         public int Quantity { get; set; }
-        public long UnitPrice { get; set; }
+        public float UnitPrice { get; set; }
         public Song Song { get; set; }
 
         [NotMapped]

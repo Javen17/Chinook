@@ -6,8 +6,9 @@ using System.Text;
 
 namespace Chinook.BusinessLogic.Interface
 {
-    public interface IAlbumManager: IBaseManager<Album>
+    public interface IEmployeeManager : IBaseManager<Employee>
     {
-        Album GetWithArtists(long id);
+        IQueryable<Employee> ListIncluded();
+        Employee GetIncluded(long id);
     }
 }

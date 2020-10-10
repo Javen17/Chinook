@@ -4,14 +4,16 @@ using EmployeesBusinessModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Chinook.BusinessModel.Migrations
 {
     [DbContext(typeof(ChinookContext))]
-    partial class ChinookContextModelSnapshot : ModelSnapshot
+    [Migration("20201009140557_007-Relation-Employee-Client")]
+    partial class _007RelationEmployeeClient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,8 +145,8 @@ namespace Chinook.BusinessModel.Migrations
                     b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("Total")
-                        .HasColumnType("real");
+                    b.Property<long>("Total")
+                        .HasColumnType("bigint");
 
                     b.HasKey("InvoiceId");
 
@@ -160,21 +162,16 @@ namespace Chinook.BusinessModel.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("InvoiceId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<long?>("SongId")
                         .HasColumnType("bigint");
 
-                    b.Property<float>("UnitPrice")
-                        .HasColumnType("real");
+                    b.Property<long>("UnitPrice")
+                        .HasColumnType("bigint");
 
                     b.HasKey("InvoiceDetailId");
-
-                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("SongId");
 
@@ -238,10 +235,6 @@ namespace Chinook.BusinessModel.Migrations
 
             modelBuilder.Entity("Chinook.BusinessModel.Models.InvoiceDetail", b =>
                 {
-                    b.HasOne("Chinook.BusinessModel.Models.Invoice", "Invoice")
-                        .WithMany("InvoiceDetails")
-                        .HasForeignKey("InvoiceId");
-
                     b.HasOne("Chinook.BusinessModel.Models.Song", "Song")
                         .WithMany()
                         .HasForeignKey("SongId");

@@ -1,0 +1,68 @@
+﻿@using Chinook.BusinessModel.Models
+@{
+    ViewData["Title"] = "Empleados";
+    var employees = (List<Employee>)ViewBag.Items;
+
+}
+
+<a asp-controller="Employee" asp-action="Create" class="btn btn-success" role="button">Agregar Empleado</a>
+<br>
+<br>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <td scope="col">Nombres</td>
+            <td scope="col">Apellidos</td>
+            <td scope="col">Correo</td>
+            <td scope="col">Cargo</td>
+            <td scope="col">Teléfono</td>
+            <td scope="col">Opciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emp in employees)
+        {
+            <tr>
+                <td>@emp.Name</td>
+                <td>@emp.LastName</td>
+                <td>@emp.Email</td>
+                <td>@emp.JobPosition</td>
+                <td>@emp.Phone</td>
+                <td>
+                    <a asp-controller="Employee" role="button" asp-route-id="@emp.EmployeeId" asp-action="Edit" class="btn btn-info btn-sm">Editar</a>
+                    <button class="btn btn-danger btn-sm" onclick="deleteItem(@emp.EmployeeId)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    function deleteItem (id) {
+
+
+        Swal.fire({
+            title: 'Eliminar',
+            text: '¿Desea eliminar este registro?',
+            icon: 'question',
+            confirmButtonText: 'Aceptar',
+            showDenyButton: true,
+            denyButtonText: 'Cancelar'
+
+        }).then(function (isConfirm) {
+
+            if (isConfirm.value) {
+                var url = window.location.href + `/Remove/${id}`;
+
+                window.location.replace(url);
+            }
+
+
+        })
+    }
+</script>
+

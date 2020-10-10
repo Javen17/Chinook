@@ -9,13 +9,14 @@
 <h1>Albums</h1>
 
 <div class="my-5">
-    @using (Html.BeginForm("Post", "Album", FormMethod.Post))
-    {
-        <strong class="pr-2">Nombre </strong> @Html.EditorFor(m => m.Title)
-        <br />
+    <form method="post" enctype="multipart/form-data" class="w-25" asp-controller="Album" asp-action="Store">
+        <div class="form-group">
+            <label for="Title">Titulo</label>
+            <input type="text" class="form-control" id="Title" name="Title" required>
+        </div>
 
-        <input class="btn btn-success btn-sm my-3" id="Submit" type="submit" value="Crear Album">
-    }
+        <button type="submit" class="btn btn-success btn-sm">Agregar</button>
+    </form>
 </div>
 
 <table class="table">
@@ -32,7 +33,11 @@
             <tr>
                 <td>@album.AlbumId</td>
                 <td>@album.Title</td>
-                <td><input class="btn btn-danger btn-sm" id="Submit" type="submit" value="Borrar Album" onclick="deleteItem(@album.AlbumId)"></td>
+                <td>
+                    <a asp-controller="Album" role="button" asp-route-id="@album.AlbumId" asp-action="Edit" class="btn btn-sm btn-success">Artistas</a>
+                    <input class="btn btn-danger btn-sm" id="Submit" type="submit" value="Borrar Album" onclick="deleteItem(@album.AlbumId)">
+
+                </td>
             </tr>
         }
     </tbody>

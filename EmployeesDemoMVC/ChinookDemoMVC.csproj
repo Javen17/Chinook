@@ -19,4 +19,8 @@
     <ProjectReference Include="..\EmployeesBusinessModel\Chinook.BusinessModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Client\" />
+  </ItemGroup>
+
 </Project>

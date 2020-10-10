@@ -1,0 +1,68 @@
+﻿@using Chinook.BusinessModel.Models
+@model Song
+@{
+    ViewData["Title"] = "Editar Cliente";
+    var employees = (List<Employee>)ViewBag.Employees;
+    var current = (Client)ViewBag.Current;
+
+}
+
+<div class="d-flex justify-content-center">
+    <form class="w-75" enctype="multipart/form-data" method="post" asp-controller="Client" asp-action="Change">
+        <h4>Editar Cliente</h4>
+
+        <input name="Id" type="hidden" value="@current.ClientId" />
+
+        <div class="form-group">
+            <label for="Name">Nombres</label>
+            <input type="text" class="form-control" id="Name" value="@current.Name" name="Name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="LastName">Apellidos</label>
+            <input type="text" class="form-control" id="LastName" value="@current.LastName" name="LastName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Correo</label>
+            <input type="email" class="form-control" id="Email" value="@current.Email" name="Email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Phone">Teléfono</label>
+            <input type="text" class="form-control" id="Phone" value="@current.Phone" name="Phone" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Support">Jefe Directo</label>
+            <select class="form-control" id="Support" name="Support">
+                <option value="" >Seleccione...</option>
+                @foreach (var emp in employees)
+                {
+                    @if (emp.EmployeeId == current.SupportEmployeeId)
+                    {
+                        <option selected value="@emp.EmployeeId">@emp.Name @emp.LastName</option>
+                    }
+                    else
+                    {
+                        <option value="@emp.EmployeeId">@emp.Name @emp.LastName</option>
+                    }
+
+                }
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+
+@section Scripts{
+    <script src="~/js/select2.full.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#Support').select2();
+        })
+    </script>
+}
+

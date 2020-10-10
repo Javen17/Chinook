@@ -10,7 +10,9 @@ namespace Chinook.BusinessModel.Models
         public long InvoiceId { get; set; }
         public Client Client { get; set; }
         public DateTime InvoiceDate { get; set; }
-        public long Total { get; set; }
+        public float Total { get; set; }
+
+        public ICollection<InvoiceDetail> InvoiceDetails { get; set; }
         [NotMapped]
         public override string Name { get ; set ; }
         [NotMapped]

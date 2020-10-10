@@ -4,14 +4,16 @@ using EmployeesBusinessModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Chinook.BusinessModel.Migrations
 {
     [DbContext(typeof(ChinookContext))]
-    partial class ChinookContextModelSnapshot : ModelSnapshot
+    [Migration("20201009231011_008-Relation-Invoice-InvoiceDetail")]
+    partial class _008RelationInvoiceInvoiceDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,8 +145,8 @@ namespace Chinook.BusinessModel.Migrations
                     b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("Total")
-                        .HasColumnType("real");
+                    b.Property<long>("Total")
+                        .HasColumnType("bigint");
 
                     b.HasKey("InvoiceId");
 

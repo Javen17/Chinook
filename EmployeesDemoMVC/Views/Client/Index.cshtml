@@ -1,34 +1,34 @@
 ﻿@using Chinook.BusinessModel.Models
 @{
-    ViewData["Title"] = "Canciones";
-    var songs = (List<Song>)ViewBag.ListItems;
+    ViewData["Title"] = "Clientes";
+    var clients = (List<Client>)ViewBag.Items;
 
 }
 
-<a asp-controller="Song" asp-action="Create" class="btn btn-success" role="button">Agregar Canción</a>
+<a asp-controller="Client" asp-action="Create" class="btn btn-success" role="button">Agregar Cliente</a>
 <br>
 <br>
 <table class="table">
     <thead class="thead-dark">
         <tr>
-            <td scope="col">ID</td>
-            <td scope="col">Nombre</td>
-            <td scope="col">Género</td>
-            <td scope="col">Album</td>
+            <td scope="col">Nombres</td>
+            <td scope="col">Apellidos</td>
+            <td scope="col">Correo</td>
+            <td scope="col">Teléfono</td>
             <td scope="col">Opciones</td>
         </tr>
     </thead>
     <tbody>
-        @foreach (var song in songs)
+        @foreach (var cli in clients)
         {
             <tr>
-                <td>@song.SongId</td>
-                <td>@song.Name</td>
-                <td>@song.Genre.Name</td>
-                <td>@song.Album.Name</td>
+                <td>@cli.Name</td>
+                <td>@cli.LastName</td>
+                <td>@cli.Email</td>
+                <td>@cli.Phone</td>
                 <td>
-                    <a asp-controller="Song" role="button" asp-route-id="@song.SongId" asp-action="Edit" class="btn btn-info btn-sm">Editar</a>
-                    <button class="btn btn-danger btn-sm" onclick="deleteItem(@song.SongId)">Eliminar</button>
+                    <a asp-controller="Client" role="button" asp-route-id="@cli.ClientId" asp-action="Edit" class="btn btn-info btn-sm">Editar</a>
+                    <button class="btn btn-danger btn-sm" onclick="deleteItem(@cli.ClientId)">Eliminar</button>
                 </td>
             </tr>
         }
@@ -41,7 +41,7 @@
 
 <script>
     function deleteItem (id) {
-        
+
 
         Swal.fire({
             title: 'Eliminar',
@@ -50,7 +50,7 @@
             confirmButtonText: 'Aceptar',
             showDenyButton: true,
             denyButtonText: 'Cancelar'
-            
+
         }).then(function (isConfirm) {
 
             if (isConfirm.value) {
@@ -58,8 +58,9 @@
 
                 window.location.replace(url);
             }
-            
-            
+
+
         })
     }
 </script>
+

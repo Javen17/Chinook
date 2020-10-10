@@ -21,6 +21,7 @@
 <table id="table" class="display" style="width:100%">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Nombre</th>
         </tr>
     </thead>
@@ -28,6 +29,7 @@
         @foreach (var genre in genres)
         {
             <tr>
+                <td>@genre.GenreId</td>
                 <td>@genre.Name</td>
                 <td><input class="btn btn-danger btn-sm my-3" id="Submit" type="submit" value="Borrar Género" onclick="deleteItem(@genre.GenreId)"></td>
             </tr>

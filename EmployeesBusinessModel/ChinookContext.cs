@@ -20,6 +20,12 @@ namespace EmployeesBusinessModel
 
         }
 
+        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Genre>().HasMany(g => g.Songs).WithOne(s => s.Genre);
+            modelBuilder.Entity<Album>().HasMany(a => a.Songs).WithOne(s => s.Album);
+        }*/
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
@@ -29,5 +35,7 @@ namespace EmployeesBusinessModel
                 optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=ChinookDemo;MultipleActiveResultSets=True;Pooling=True;Min Pool Size=25;Max Pool Size=250;Application Name=Chinook;Trusted_Connection=True");
             }
         }
+
+        
     }
 }

@@ -3,8 +3,8 @@ using System.Linq;
 
 namespace Chinook.BusinessLogic.Interface
 {
-    public interface ISongManager : IBaseManager<Song>
+    public interface IClientManager : IBaseManager<Client>
     {
-        IQueryable<Song> GetIncluded();
+        IQueryable<Client> ListIncluded();
     }
 }

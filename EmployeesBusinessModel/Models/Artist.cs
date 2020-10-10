@@ -15,6 +15,8 @@ namespace Chinook.BusinessModel.Models
         public long ArtistId { get; set; }
 
         public long AlbumId { get; set; }
+
+        [ForeignKey("AlbumId")]
         public Album Album { get; set; }
 
     }

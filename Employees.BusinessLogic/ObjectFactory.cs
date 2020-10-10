@@ -1,5 +1,6 @@
 ﻿using Chinook.BusinessLogic.Implementation;
 using Chinook.BusinessLogic.Interface;
+using Chinook.BusinessModel.Models;
 using EmployeesBusinessModel;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,8 @@ namespace Chinook.BusinessLogic
 				Container.RegisterSingleton<IGenreManager, GenreManager>(new InjectionConstructor(_context));
 				Container.RegisterSingleton<IAlbumManager, AlbumManager>(new InjectionConstructor(_context));
 				Container.RegisterSingleton<ISongManager, SongManager>(new InjectionConstructor(_context));
+				Container.RegisterSingleton<IEmployeeManager, EmployeeManager>(new InjectionConstructor(_context));
+				Container.RegisterSingleton<IClientManager, ClientManager>(new InjectionConstructor(_context));
 			}
 			catch (Exception e)
 			{

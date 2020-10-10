@@ -9,17 +9,17 @@ using System.Text;
 
 namespace Chinook.BusinessLogic.Implementation
 {
-    class AlbumManager : BaseManager<Album>, IAlbumManager
+    public class ClientManager : BaseManager<Client>, IClientManager
     {
-        public AlbumManager(ChinookContext context) : base(context)
+        public ClientManager(ChinookContext context) : base(context)
         {
             _context = context;
-            _dbSet = _context.Album;
+            _dbSet = _context.Client;
         }
 
-        public Album GetWithArtists(long id)
+        public IQueryable<Client> ListIncluded()
         {
-            return _dbSet.Include(a => a.Artists).FirstOrDefault(a => a.AlbumId == id);
+            return _dbSet.Include(c => c.Support);
         }
     }
 }

@@ -17,6 +17,8 @@ namespace Chinook.BusinessModel.Models
         public long AlbumId { get; set; }
         public string Title { get; set; }
 
-        public virtual ICollection<Artist> Artist { get; set; }
+        public virtual ICollection<Artist> Artists { get; set; }
+
+        public virtual ICollection<Song> Songs { get; set; }
     }
 }
