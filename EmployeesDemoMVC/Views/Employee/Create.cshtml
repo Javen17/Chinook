@@ -38,7 +38,7 @@
         <div class="form-group">
             <label for="DirectBoss">Jefe Directo</label>
             <select class="form-control" id="DirectBoss" name="DirectBoss">
-                <option>Seleccione...</option>
+                <option value="">Seleccione...</option>
                 @foreach (var emp in employees)
                 {
                     <option value="@emp.EmployeeId">@emp.Name @emp.LastName</option>

@@ -53,7 +53,7 @@ namespace ChinookDemoMVC.Controllers
 
             Console.WriteLine("DirectBoss: " + form["DirectBoss"].ToString());
 
-            if (form["DirectBoss"].ToString() != null || form["DirectBoss"].ToString() != "")
+            if (form["DirectBoss"].ToString() != "")
             {
                 employee.DirectBossEmployeeId = long.Parse(form["DirectBoss"].ToString());
             }
@@ -96,7 +96,7 @@ namespace ChinookDemoMVC.Controllers
 
             Console.WriteLine("DirectBoss: " + form["DirectBoss"].ToString());
 
-            if(form["DirectBoss"].ToString() != null || form["DirectBoss"].ToString() != "")
+            if(form["DirectBoss"].ToString() != "")
             {
                 employee.DirectBossEmployeeId = long.Parse(form["DirectBoss"].ToString());
             }

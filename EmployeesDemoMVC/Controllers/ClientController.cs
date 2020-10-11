@@ -96,7 +96,7 @@ namespace ChinookDemoMVC.Controllers
 
             Console.WriteLine("Support: " + form["Support"].ToString());
 
-            if (form["DirectBoss"].ToString() != null || form["Support"].ToString() != "")
+            if (form["Support"].ToString() != "")
             {
                 client.SupportEmployeeId = long.Parse(form["Support"].ToString());
             }
