@@ -1,7 +1,7 @@
 ﻿@using Chinook.BusinessModel.Models
 @{
     ViewData["Title"] = "Clientes";
-    var clients = (List<Client>)ViewBag.Items;
+    var clients = (List<Client>)ViewBag.ListItems;
 
 }
 
@@ -36,6 +36,9 @@
 
 
 </table>
+
+<partial name="~/Views/Shared/_PaginationBar.cshtml" />
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 

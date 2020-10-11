@@ -24,18 +24,37 @@ namespace ChinookDemoMVC.Controllers
         {
             public IBaseManager<TEntity> _manager;
             public const int _defaultPageSize = 5;
+            public string _mainCrudView;
+
+            [HttpGet]
+            public virtual IActionResult Index(int pageNumber = 1, int pageSize = _defaultPageSize)
+            {
+                IQueryable<TEntity> query = _manager.List();
+                var itemCount = query.Count();
+                int? pages = GetPages(itemCount, pageNumber, pageSize);
+
+               query = Paginate(query, pageNumber);
+
+                var items = query.ToList();
+
+                ViewData["ListItems"] = items;
+                ViewData["Pages"] = pages;
+                ViewData["CurrentPage"] = pageNumber;
+
+                return View(_mainCrudView);
+            }
 
             [HttpGet("json")]
-            public virtual async Task<ActionResult<IEnumerable<TEntity>>> Get(int? page, int pageSize = _defaultPageSize)
+            public virtual async Task<ActionResult<IEnumerable<TEntity>>> Get(int? pageNumber, int pageSize = _defaultPageSize)
             {
                 try
                 {
                     IQueryable<TEntity> query = _manager.List();
                     var itemCount = query.Count();
-                    int? pages = GetPages(itemCount, page, pageSize);
+                    int? pages = GetPages(itemCount, pageNumber, pageSize);
 
-                    if (page.HasValue)
-                        query = Paginate(query, page.Value);
+                    if (pageNumber.HasValue)
+                        query = Paginate(query, pageNumber.Value);
 
                     var items = query.ToList();
 
@@ -162,17 +181,17 @@ namespace ChinookDemoMVC.Controllers
 
             ///TODO possibly issue where method doesnt search and returns all values, if the search arguments are not valid return 400 not a 
             [HttpGet("search/")]
-            public virtual async Task<ActionResult<TEntity>> Search(string filterField = null, string filterValue = null, string sortProperty = null, int? page = null, int pageSize = _defaultPageSize)
+            public virtual async Task<ActionResult<TEntity>> Search(string filterField = null, string filterValue = null, string sortProperty = null, int? pageNumber = null, int pageSize = _defaultPageSize)
             {
                 Debug.WriteLine(filterField);
                 Debug.WriteLine(filterValue);
 
                 var query = _manager.Search(filterField, filterValue, sortProperty);
                 var itemCount = query.Count();
-                int? pages = GetPages(itemCount, page, pageSize);
+                int? pages = GetPages(itemCount, pageNumber, pageSize);
 
-                if (page.HasValue)
-                    query = Paginate(query, page.Value);
+                if (pageNumber.HasValue)
+                    query = Paginate(query, pageNumber.Value);
 
                 var items = query.ToList();
 
@@ -186,17 +205,17 @@ namespace ChinookDemoMVC.Controllers
 
 
             ///maybe we could make this a mode of search and not a different endpoint
-            [HttpGet("search-all/")]
-            public virtual async Task<ActionResult<TEntity>> SearchAllFields(string filterValue = null, string sortProperty = null, int? page = null, int pageSize = _defaultPageSize)
+            [HttpGet("json/search-all/")]
+            public virtual async Task<ActionResult<TEntity>> SearchAllFieldsJson(string filterValue = null, string sortProperty = null, int? pageNumber = null, int pageSize = _defaultPageSize)
             {
                 try
                 {
                     var query = _manager.SearchAll(filterValue, sortProperty);
                     var itemCount = query.Count();
-                    int? pages = GetPages(itemCount, page, pageSize);
+                    int? pages = GetPages(itemCount, pageNumber, pageSize);
 
-                    if (page.HasValue)
-                        query = Paginate(query, page.Value);
+                    if (pageNumber.HasValue)
+                        query = Paginate(query, pageNumber.Value);
 
                     var items = query.ToList();
 
@@ -215,20 +234,49 @@ namespace ChinookDemoMVC.Controllers
                 }
             }
 
+            [HttpGet("search-all/")]
+            public virtual async Task<ActionResult<TEntity>> SearchAllFields(string filterValue = null, string sortProperty = null, int? pageNumber = null, int pageSize = _defaultPageSize)
+            {
+                try
+                {
+                    var query = _manager.SearchAll(filterValue, sortProperty);
+                    var itemCount = query.Count();
+                    int? pages = GetPages(itemCount, pageNumber, pageSize);
+
+                    if (pageNumber.HasValue)
+                        query = Paginate(query, pageNumber.Value);
+
+                    var items = query.ToList();
+
+                    ViewData["ListItems"] = items;
+                    ViewData["Pages"] = pages;
+                    ViewData["CurrentPage"] = pageNumber;
+
+                    return View(_mainCrudView);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                    LogManager.Current.Log.Error(e);
+                    return StatusCode(500, "Internal Server Error " + e.Message);
+                }
+            }
+
+
 
             [NonAction]
-            public IQueryable<TEntity> Paginate(IQueryable<TEntity> query, int page, int pageSize = _defaultPageSize)
+            public IQueryable<TEntity> Paginate(IQueryable<TEntity> query, int pageNumber, int pageSize = _defaultPageSize)
             {
-                return query.Skip((page - 1) * pageSize).Take(pageSize);
+                return query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
             }
 
             [NonAction]
-            public int? GetPages(int itemCount, int? page, int pageSize)
+            public int? GetPages(int itemCount, int? pageNumber, int pageSize)
             {
                 int? pages = null;
 
-                if (page.HasValue && pageSize > 0)
+                if (pageNumber.HasValue && pageSize > 0)
                 {
                     if (itemCount == 0)
                         pages = 0;

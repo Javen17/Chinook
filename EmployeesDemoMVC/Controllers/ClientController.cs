@@ -15,23 +15,16 @@ namespace ChinookDemoMVC.Controllers
     [ApiController]
     public class ClientController : BaseController<Client>
     {
-        private readonly IClientManager _clientManager;
         private readonly IEmployeeManager _employeeManager;
 
         public ClientController(IObjectFactory factory) : base()
         {
-            _clientManager = factory.Resolve<IClientManager>();
+            _manager = factory.Resolve<IClientManager>();
             _employeeManager = factory.Resolve<IEmployeeManager>();
+            _mainCrudView = "~/Views/Client/Index.cshtml";
         }
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            var items = _clientManager.List().ToList();
-            ViewData["Items"] = items;
-            return View("~/Views/Client/Index.cshtml");
-        }
-
+      
         [HttpGet]
         [Route("[action]")]
         public IActionResult Create()
@@ -59,7 +52,7 @@ namespace ChinookDemoMVC.Controllers
                 client.SupportEmployeeId = long.Parse(form["Support"].ToString());
             }
 
-            await _clientManager.Add(client);
+            await _manager.Add(client);
 
             return Redirect("/Client");
         }
@@ -68,7 +61,7 @@ namespace ChinookDemoMVC.Controllers
         [Route("[action]/{id}")]
         public IActionResult Edit(long id)
         {
-            var client = _clientManager.Get(id).Result;
+            var client = _manager.Get(id).Result;
             var clientItems = _employeeManager.List().ToList();
 
             if (client == null)
@@ -101,7 +94,7 @@ namespace ChinookDemoMVC.Controllers
                 client.SupportEmployeeId = long.Parse(form["Support"].ToString());
             }
 
-            await _clientManager.Modify(client.ClientId, client);
+            await _manager.Modify(client.ClientId, client);
 
             return Redirect("/Client");
         }
@@ -110,7 +103,7 @@ namespace ChinookDemoMVC.Controllers
         [Route("[action]/{id}")]
         public virtual async Task<IActionResult> Remove(long id)
         {
-            await _clientManager.Delete(id);
+            await _manager.Delete(id);
             return Redirect("/Client");
         }
     }
