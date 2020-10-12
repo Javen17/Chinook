@@ -68,10 +68,10 @@
 
 
          <text>
-        var searchString = "@nextPage";
+        var searchString = decodeURIComponent("@Html.Raw(nextPage)");
         function search() {;
             var filterValue = document.getElementById("searchBar").value;
-            window.location.href = encodeURI(searchString + filterValue);
+            window.location.href = decodeURIComponent(searchString + filterValue);
         }
          </text>
      }
