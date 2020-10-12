@@ -24,7 +24,7 @@ namespace ChinookDemoMVC.Controllers
 
 
         [HttpGet]
-        public IActionResult Index(int page = 1, int pageSize = _defaultPageSize)
+        public override IActionResult Index(int page = 1, int pageSize = _defaultPageSize)
         {
             var query = _manager.List();
             var itemCount = query.Count();

@@ -21,6 +21,7 @@ namespace ChinookDemoMVC.Controllers
         private readonly IArtistManager artistManager;
         public AlbumController(IObjectFactory factory) : base()
         {
+            _manager = factory.Resolve<IAlbumManager>();
             albumManager = factory.Resolve<IAlbumManager>();
             artistManager = factory.Resolve<IArtistManager>();
         }

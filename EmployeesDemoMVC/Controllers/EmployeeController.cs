@@ -20,14 +20,7 @@ namespace ChinookDemoMVC.Controllers
         public EmployeeController(IObjectFactory factory) : base()
         {
             _employeeManager = factory.Resolve<IEmployeeManager>();
-        }
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            var items = _employeeManager.List().ToList();
-            ViewData["Items"] = items;
-            return View("~/Views/Employee/Index.cshtml");
+            _manager = factory.Resolve<IEmployeeManager>();
         }
 
         [HttpGet]
