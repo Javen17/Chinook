@@ -1,5 +1,78 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using Microsoft.AspNetCore.Http.Extensions;
+@using System.Text.RegularExpressions
+
+<style>
+    #search {
+        display: flex;
+        align-items: center;
+    }
+
+    #search-p {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+</style>
+
+<div class="input-group md-form form-sm form-2 pl-0 my-4">
+    <input id="searchBar" class="form-control my-0 py-1 red-border" type="text" placeholder="Search" aria-label="Search" style="height:50px;">
+    <div class="input-group-append">
+        <button class="input-group-text btn btn-success" id="search" style="height:50px;" onclick="search()">
+            <p>Buscar</p>
+        </button>
+    </div>
+</div>
+
+
+<script>
+    var url = "@Url.ActionContext.HttpContext.Request.GetEncodedUrl()";
+
+     @{
+         string queryString = Url.ActionContext.HttpContext.Request.QueryString.ToString();
+         string parameterToRemove = "FilterValue";   //parameter which we want to remove
+         string regex = string.Format("(&{0}=[^&\\s]+|{0}=[^&\\s]+&?)", parameterToRemove);
+         string nextPage;
+
+         string finalQS = Regex.Replace(queryString, regex, "");
+
+
+         if (Url.ActionContext.HttpContext.Request.GetDisplayUrl().IndexOf("?") != -1)
+         {
+             nextPage = Url.ActionContext.HttpContext.Request.GetEncodedUrl().Substring(0, Url.ActionContext.HttpContext.Request.GetDisplayUrl().IndexOf("?"));
+             nextPage = nextPage.Replace("?", "");
+
+             if (Url.ActionContext.HttpContext.Request.GetDisplayUrl().IndexOf("search-all/") == -1)
+             {
+                 nextPage += "/search-all/";
+             }
+
+             if (finalQS != "?")
+             {
+                 nextPage += finalQS + "&FilterValue=";
+             }
+             else
+             {
+                 nextPage += finalQS + "FilterValue=";
+             }
+         }
+         else
+         {
+             nextPage = Url.ActionContext.HttpContext.Request.GetEncodedUrl();
+
+             if (Url.ActionContext.HttpContext.Request.GetDisplayUrl().IndexOf("search-all/") == -1)
+             {
+                 nextPage += "/search-all/";
+             }
+
+            nextPage += "?" + finalQS + "FilterValue=";
+         }
+
+
+         <text>
+        var searchString = "@nextPage";
+        function search() {;
+            var filterValue = document.getElementById("searchBar").value;
+            window.location.href = encodeURI(searchString + filterValue);
+        }
+         </text>
+     }
+</script>

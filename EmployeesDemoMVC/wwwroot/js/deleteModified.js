@@ -23,5 +23,6 @@ function modifyItem(url, itemId) {
 }
 
 function searchItem(url, searchString) {
-    window.location.replace(url + '/search-all/' + searchString);
+    if (window.location.href.includes('/search-all/'))
+        window.location.replace(url + '/search-all/' + 'filterValue=' + searchString);
 }

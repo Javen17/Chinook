@@ -235,7 +235,7 @@ namespace ChinookDemoMVC.Controllers
             }
 
             [HttpGet("search-all/")]
-            public virtual async Task<ActionResult<TEntity>> SearchAllFields(string filterValue = null, string sortProperty = null, int? pageNumber = null, int pageSize = _defaultPageSize)
+            public virtual async Task<ActionResult<TEntity>> SearchAllFields(string filterValue = null, string sortProperty = null, int? pageNumber = 1, int pageSize = _defaultPageSize)
             {
                 try
                 {
