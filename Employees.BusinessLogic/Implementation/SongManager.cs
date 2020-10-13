@@ -18,5 +18,18 @@ namespace Chinook.BusinessLogic.Implementation
         {
             return _dbSet.Include(m => m.Album).Include(m => m.Genre);
         }
+
+        public IQueryable<Song> SearchAllIncluded(string filterValue, string sortProperty)
+        {
+            IQueryable<Song> query = _dbSet.AsQueryable().Include(m => m.Album).Include(m => m.Genre);
+            string[] ignoredFields = new string[] { };
+
+            query = CreateSearchQuery(query, filterValue, ignoredFields);
+
+            /*if (sortProperty != null)
+                query.OrderBy(sortProperty); */
+
+            return query;
+        }
     }
 }

@@ -21,5 +21,8 @@ namespace Chinook.BusinessLogic.Implementation
         {
             return _dbSet.Include(a => a.Artists).FirstOrDefault(a => a.AlbumId == id);
         }
+
+        
+    
     }
 }
