@@ -25,6 +25,7 @@ namespace ChinookDemoMVC.Controllers
             public IBaseManager<TEntity> _manager;
             public const int _defaultPageSize = 5;
             public string _mainCrudView;
+            private string _redirectUrl;
 
             [HttpGet]
             public virtual IActionResult Index(int pageNumber = 1, int pageSize = _defaultPageSize)
@@ -211,6 +212,7 @@ namespace ChinookDemoMVC.Controllers
                 try
                 {
                     var query = _manager.SearchAll(filterValue, sortProperty);
+                    Console.WriteLine("sortProperty: " + sortProperty);
                     var itemCount = query.Count();
                     int? pages = GetPages(itemCount, pageNumber, pageSize);
 

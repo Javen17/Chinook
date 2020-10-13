@@ -21,6 +21,7 @@ namespace ChinookDemoMVC.Controllers
         {
             _employeeManager = factory.Resolve<IEmployeeManager>();
             _manager = factory.Resolve<IEmployeeManager>();
+            _mainCrudView = "~/Views/Employee/Index.cshtml";
         }
 
         [HttpGet]

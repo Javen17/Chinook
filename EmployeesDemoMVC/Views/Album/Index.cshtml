@@ -8,45 +8,54 @@
 
 <h1>Albums</h1>
 
-<div class="my-5">
-    <form method="post" enctype="multipart/form-data" class="w-25" asp-controller="Album" asp-action="Store">
-        <div class="form-group">
-            <label for="Title">Titulo</label>
-            <input type="text" class="form-control" id="Title" name="Title" required>
-        </div>
+<div class="d-flex justify-content-between align-items-center">
+    <div class="my-5">
+        <form method="post" enctype="multipart/form-data" class="w-25" asp-controller="Album" asp-action="Store">
+            <div class="form-group">
+                <label for="Title">Titulo</label>
+                <input type="text" class="form-control" id="Title" name="Title" required>
+            </div>
 
-        <button type="submit" class="btn btn-success btn-sm">Agregar</button>
-    </form>
+            <button type="submit" class="btn btn-success btn-sm">Agregar</button>
+        </form>
+    </div>
+
+    <div class="my-5 w-50">
+        <partial name="~/Views/Shared/_SearchBar.cshtml" />
+    </div>
 </div>
+    
 
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <td scope="col">ID</td>
-            <td scope="col">Nombre</td>
-            <td scope="col">Borrar</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var album in albums)
-        {
+    
+
+    <table class="table">
+        <thead class="thead-dark">
             <tr>
-                <td>@album.AlbumId</td>
-                <td>@album.Title</td>
-                <td>
-                    <a asp-controller="Album" role="button" asp-route-id="@album.AlbumId" asp-action="Edit" class="btn btn-sm btn-success">Artistas</a>
-                    <input class="btn btn-danger btn-sm" id="Submit" type="submit" value="Borrar Album" onclick="deleteItem(@album.AlbumId)">
-
-                </td>
+                <td scope="col">ID</td>
+                <td scope="col">Nombre</td>
+                <td scope="col">Borrar</td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var album in albums)
+            {
+                <tr>
+                    <td>@album.AlbumId</td>
+                    <td>@album.Title</td>
+                    <td>
+                        <a asp-controller="Album" role="button" asp-route-id="@album.AlbumId" asp-action="Edit" class="btn btn-sm btn-success">Artistas</a>
+                        <input class="btn btn-danger btn-sm" id="Submit" type="submit" value="Borrar Album" onclick="deleteItem(@album.AlbumId)">
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <partial name="~/Views/Shared/_PaginationBar.cshtml" />
 
 
-
-
-<script>
+    <script>
     @if(ViewData["Deleted"] != null)
 {
     if ((bool)ViewData["Deleted"])
@@ -90,4 +99,4 @@
                 return;
             } });
     }
-</script>
+    </script>

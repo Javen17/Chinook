@@ -5,9 +5,14 @@
 
 }
 
-<a asp-controller="Song" asp-action="Create" class="btn btn-success" role="button">Agregar Canción</a>
-<br>
-<br>
+<div class="d-flex justify-content-between align-items-center">
+    <a asp-controller="Song" asp-action="Create" class="btn btn-success" role="button">Agregar Canción</a>
+    <div class="my-5 w-50">
+        <partial name="~/Views/Shared/_SearchBar.cshtml" />
+    </div>
+</div>
+
+
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -36,6 +41,8 @@
 
 
 </table>
+
+<partial name="~/Views/Shared/_PaginationBar.cshtml" />
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Chinook.BusinessLogic;
@@ -27,10 +28,13 @@ namespace ChinookDemoMVC.Controllers
             _genreManager = factory.Resolve<IGenreManager>();
             _songManager = factory.Resolve<ISongManager>();
             _logger = logger;
+            _manager = factory.Resolve<ISongManager>();
+            _mainCrudView = "~/Views/Song/Index.cshtml";
         }
 
 
         [HttpGet]
+        override
         public IActionResult Index(int page = 1, int pageSize = _defaultPageSize)
         {
             var query = _songManager.GetIncluded();
@@ -46,6 +50,7 @@ namespace ChinookDemoMVC.Controllers
             return View("~/Views/Song/Index.cshtml");
         }
 
+        [HttpGet]
         [Route("[action]")]
         public IActionResult Create()
         {
@@ -128,6 +133,36 @@ namespace ChinookDemoMVC.Controllers
 
             await _songManager.Delete(id);
             return Redirect("/Song");
+        }
+
+        [HttpGet("search-all/")]
+        override
+        public async Task<ActionResult<Song>> SearchAllFields(string filterValue = null, string sortProperty = null, int? pageNumber = 1, int pageSize = _defaultPageSize)
+        {
+            try
+            {
+                var query = _songManager.SearchAllIncluded(filterValue, sortProperty);
+                var itemCount = query.Count();
+                int? pages = GetPages(itemCount, pageNumber, pageSize);
+
+                if (pageNumber.HasValue)
+                    query = Paginate(query, pageNumber.Value);
+
+                var items = query.ToList();
+
+                ViewData["ListItems"] = items;
+                ViewData["Pages"] = pages;
+                ViewData["CurrentPage"] = pageNumber;
+
+
+                return View("~/Views/Song/Index.cshtml");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                LogManager.Current.Log.Error(e);
+                return StatusCode(500, "Internal Server Error " + e.Message);
+            }
         }
     }
 }

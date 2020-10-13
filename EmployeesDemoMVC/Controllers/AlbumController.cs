@@ -24,8 +24,11 @@ namespace ChinookDemoMVC.Controllers
             _manager = factory.Resolve<IAlbumManager>();
             albumManager = factory.Resolve<IAlbumManager>();
             artistManager = factory.Resolve<IArtistManager>();
+            _mainCrudView = "~/Views/Album/Index.cshtml";
         }
 
+        [HttpGet]
+        override
         public IActionResult Index(int page = 1, int pageSize = _defaultPageSize)
         {
             var query = albumManager.List();
